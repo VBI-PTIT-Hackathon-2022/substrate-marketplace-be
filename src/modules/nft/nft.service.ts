@@ -52,6 +52,7 @@ export class NftService {
 
   async addNft(data: AddNftDto) {
     const user = await this.userService.getOne(data.walletAddress);
+    console.log(user);
     if (user) {
       data.userId = user._id;
       data.walletAddress = data.walletAddress;

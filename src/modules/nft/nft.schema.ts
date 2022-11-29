@@ -38,6 +38,10 @@ export class Nft {
 
   @Prop()
   @ApiProperty()
+  custodian: string;
+
+  @Prop()
+  @ApiProperty()
   dna: string;
 
   @Prop()

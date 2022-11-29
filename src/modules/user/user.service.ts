@@ -60,25 +60,31 @@ export class UserService {
     });
 
     const account: any = await api.query.nftCurrency.listOwned(walletAddress);
+    console.log("121313",account);
     const nftArray = [];
     for (let i = 0; i < account.length; i++) {
       const nft = await api.query.nftCurrency.tokenUri(account[i]);
+      console.log(nft);
       const uri = this.nftService.hex_to_ascii(nft.toHex());
       let nftInfor: CreateNftDto;
       if (uri.length > 2) {
+        console.log("54354",uri);
         const { data } = await lastValueFrom(
           this.httpService.get<any>(uri.slice(2)).pipe(),
         );
+        console.log("543541111",data)
         nftInfor = data;
       }
       nftInfor.userId = user._id;
       nftInfor.tokenId = account[i];
       nftInfor.walletAddress = user.walletAddress;
+      console.log("443344",nftInfor);
       nftArray.push(nftInfor);
     }
 
     await this.nftService.createNft(nftArray);
     const res = await this.getUser(walletAddress, query);
+    console.log(res);
     return res[0];
   }
 
