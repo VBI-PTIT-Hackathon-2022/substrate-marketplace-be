@@ -21,9 +21,10 @@ export async function listenPolkadot(
         const data = {
           walletAddress: enventData[0],
           tokenId: enventData[1],
+          custodian: enventData[0],
         };
         await nftService.addNft(data);
-      } else if (event.section === 'nftCurrency' && event.method === 'SetURI') {
+      } else if (event.section === 'nftCurrency' && event.method === 'SetUri') {
         const enventData = [];
         event.data.forEach((data) => {
           enventData.push(data.toString());

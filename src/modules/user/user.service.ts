@@ -49,42 +49,40 @@ export class UserService {
 
   async create(walletAddress, userData: UpdateUserDto, query: QueryParamDto) {
     const userCurrent = await this.getUser(walletAddress, query);
-
-    if (userCurrent.length > 0) {
+    console.log(userData)
+    if (userCurrent.length > 0 || userData['name'] === undefined) {
       return userCurrent[0];
     }
+    console.log("pass", userData)
     userData['walletAddress'] = walletAddress;
     const user = await this.userModel.create(userData);
+
+    console.log(user);
     const api = await ApiPromise.create({
       provider: this.wsProvider,
     });
-
     const account: any = await api.query.nftCurrency.listOwned(walletAddress);
-    console.log("121313",account);
     const nftArray = [];
     for (let i = 0; i < account.length; i++) {
       const nft = await api.query.nftCurrency.tokenUri(account[i]);
-      console.log(nft);
       const uri = this.nftService.hex_to_ascii(nft.toHex());
       let nftInfor: CreateNftDto;
       if (uri.length > 2) {
-        console.log("54354",uri);
         const { data } = await lastValueFrom(
           this.httpService.get<any>(uri.slice(2)).pipe(),
         );
-        console.log("543541111",data)
         nftInfor = data;
       }
       nftInfor.userId = user._id;
       nftInfor.tokenId = account[i];
       nftInfor.walletAddress = user.walletAddress;
-      console.log("443344",nftInfor);
+      nftInfor.custodian = user.walletAddress;
       nftArray.push(nftInfor);
     }
 
     await this.nftService.createNft(nftArray);
     const res = await this.getUser(walletAddress, query);
-    console.log(res);
+    console.log(res)
     return res[0];
   }
 
