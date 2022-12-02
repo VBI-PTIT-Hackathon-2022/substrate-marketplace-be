@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { lastValueFrom } from 'rxjs';
@@ -8,6 +8,7 @@ import { UserService } from '../user/user.service';
 import CreateNftDto, { AddNftDto, SetUriNftDto } from './dto/nft.create.dto';
 
 import { Nft, NftDocument } from './nft.schema';
+import UpdateNftDto from './dto/nft.update.dto';
 
 @Injectable()
 export class NftService {
@@ -50,6 +51,18 @@ export class NftService {
     return nft;
   }
 
+  async getNFTRented(walletAddress: string) {
+    const nft = await this.nftModel.aggregate([
+      {
+        $match: {
+          custodian: walletAddress,
+        },
+      },
+    ]);
+    console.log(nft);
+    return nft;
+  }
+
   async addNft(data: AddNftDto) {
     const user = await this.userService.getOne(data.walletAddress);
     console.log(user);
@@ -60,9 +73,20 @@ export class NftService {
     }
   }
 
-  async getNft(tokenId: string) {
-     return this.nftModel.findOne({tokenId: tokenId});
+  async updateCustodian(tokenId, data: UpdateNftDto) {
+    try {
+      console.log(tokenId, data);
+      await this.nftModel.findOneAndUpdate(tokenId, data);
+      return {
+        success: true,
+      };
+    } catch (error) {
+      throw new BadRequestException('bad request exception');
+    }
+  }
 
+  async getNft(tokenId: string) {
+    return this.nftModel.findOne({ tokenId: tokenId });
   }
 
   async setUri(setUriNftDto: SetUriNftDto) {

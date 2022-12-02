@@ -47,17 +47,23 @@ export class UserService {
     ]);
   }
 
+  async getNFTRented(walletAddress: string) {
+    const userCurrent = await this.userModel.findOne({
+      walletAddress: walletAddress,
+    });
+    if (!userCurrent) return [];
+    const nft = await this.nftService.getNFTRented(walletAddress);
+    return nft;
+  }
+
   async create(walletAddress, userData: UpdateUserDto, query: QueryParamDto) {
     const userCurrent = await this.getUser(walletAddress, query);
-    console.log(userData)
     if (userCurrent.length > 0 || userData['name'] === undefined) {
       return userCurrent[0];
     }
-    console.log("pass", userData)
     userData['walletAddress'] = walletAddress;
     const user = await this.userModel.create(userData);
 
-    console.log(user);
     const api = await ApiPromise.create({
       provider: this.wsProvider,
     });
@@ -77,12 +83,12 @@ export class UserService {
       nftInfor.tokenId = account[i];
       nftInfor.walletAddress = user.walletAddress;
       nftInfor.custodian = user.walletAddress;
+      nftInfor.status = 'none';
       nftArray.push(nftInfor);
     }
 
     await this.nftService.createNft(nftArray);
     const res = await this.getUser(walletAddress, query);
-    console.log(res)
     return res[0];
   }
 

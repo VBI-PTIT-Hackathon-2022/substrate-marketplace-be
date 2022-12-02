@@ -18,11 +18,11 @@ export class UpdateListingDto {
   tokenId?: string;
 
   @IsOptional()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
-    example: 100000000000,
+    example: '100000000000',
   })
-  fee?: number;
+  fee?: string;
 
   @IsOptional()
   @IsString()

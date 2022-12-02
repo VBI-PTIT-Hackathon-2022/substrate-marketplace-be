@@ -46,6 +46,10 @@ export class Nft {
 
   @Prop()
   @ApiProperty()
+  status: string;
+
+  @Prop()
+  @ApiProperty()
   edition: number;
 
   @Prop()

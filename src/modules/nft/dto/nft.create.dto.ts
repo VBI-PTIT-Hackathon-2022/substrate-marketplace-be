@@ -75,6 +75,13 @@ export class CreateNftDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
+    example: 'forSale/forRent/none',
+  })
+  status: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
     example:
       '0xd95e05e709d5e16b9f88c63992651e2c521fb2d3ff03c2b1c170fa3d3ac4e3aa',
   })
@@ -110,10 +117,17 @@ export class AddNftDto {
   tokenId: string;
 
   @IsOptional()
+  @IsString()
+  @ApiProperty({
+    example:
+      'forRent/forSale/None',
+  })
+  status: string;
+
+  @IsOptional()
   @IsMongoId()
   @ApiProperty()
   userId?: ObjectId;
-
 }
 
 export class SetUriNftDto {

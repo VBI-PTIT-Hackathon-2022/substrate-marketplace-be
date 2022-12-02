@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -9,6 +9,7 @@ import {
 import { USER_SWAGGER_RESPONSE } from '../user/user.constant';
 import { NFT_SWAGGER_RESPONSE } from './nft.constant';
 import { NftService } from './nft.service';
+import NftUpdateDto from './dto/nft.update.dto';
 
 @ApiBearerAuth()
 @Controller('nfts')
@@ -23,4 +24,16 @@ export class NftController {
   create(@Param('tokenId') tokenId: string) {
     return this.nftService.getNft(tokenId);
   }
+
+  @Post(':tokenId')
+  @ApiOperation({ summary: 'api update custodian of nft ' })
+  @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
+  @ApiOkResponse(NFT_SWAGGER_RESPONSE.CREATE_SUCCESS)
+  updateCustodian(
+    @Param('tokenId') tokenId: string,
+    @Body() body: NftUpdateDto,
+  ) {
+    return this.nftService.updateCustodian(tokenId, body);
+  }
 }
+

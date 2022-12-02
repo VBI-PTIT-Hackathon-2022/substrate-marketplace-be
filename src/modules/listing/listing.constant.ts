@@ -5,7 +5,7 @@ export const LISTING_SWAGGER_RESPONSE = {
       lender: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
       tokenId:
         '0xd95e05e709d5e16b9f88c63992651e2c521fb2d3ff03c2b1c170fa3d3ac4e3aa',
-      fee: 100000000000,
+      fee: '0.01',
       due_date: '2022-12-12',
       paid_type: 1,
       message: 'string',
@@ -41,7 +41,7 @@ export const LISTING_SWAGGER_RESPONSE = {
         lender: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
         tokenId:
           '0xd95e05e709d5e16b9f88c63992651e2c521fb2d3ff03c2b1c170fa3d3ac4e3aa',
-        fee: 100000000000,
+        fee: '100000000000',
         due_date: '1766287472',
         paid_type: 1,
         message: 'string',
@@ -55,7 +55,7 @@ export const LISTING_SWAGGER_RESPONSE = {
         lender: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
         tokenId:
           '0x7c66db7f2a0fdbfbf17dd24f39a08000db70492aec11772086b834f76503af27',
-        fee: 100000000000,
+        fee: '100000000000',
         due_date: 1766287472,
         paid_type: 1,
         message: 'string',

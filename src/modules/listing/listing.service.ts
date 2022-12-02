@@ -83,19 +83,6 @@ export class ListingService {
         },
       },
       {
-        $lookup: {
-          from: 'nfts',
-          localField: 'tokenId',
-          foreignField: 'tokenId',
-          as: 'nfts',
-        },
-      },
-      {
-        $project: {
-          nfts: 1,
-        },
-      },
-      {
         $skip: (pageIndex - 1) * pageSize,
       },
       {

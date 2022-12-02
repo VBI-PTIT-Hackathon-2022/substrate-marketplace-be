@@ -22,6 +22,7 @@ export async function listenPolkadot(
           walletAddress: enventData[0],
           tokenId: enventData[1],
           custodian: enventData[0],
+          status: 'none',
         };
         await nftService.addNft(data);
       } else if (event.section === 'nftCurrency' && event.method === 'SetUri') {
@@ -52,8 +53,14 @@ export async function listenPolkadot(
           due_date: rentalInfo.dueDate,
           paid_type: rentalInfo.paidType,
         };
+        const nft = {
+          tokenId: rentalInfo.token,
+          custodian: borrower,
+          status: 'isRenting',
+        };
         console.log(hashId);
         await orderService.createOrder(data);
+        await nftService.updateCustodian(rentalInfo.token, nft);
       }
     });
   });

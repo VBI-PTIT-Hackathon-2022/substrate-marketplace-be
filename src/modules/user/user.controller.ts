@@ -50,6 +50,15 @@ export class UserController {
     return this.userService.getOne(walletAddress);
   }
 
+  @Get('/rent/:walletAddress')
+  @ApiOperation({ summary: 'api get nft that user rents ' })
+  @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
+  @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_SUCCESS)
+  @HttpCode(200)
+  getNFTRented(@Param('walletAddress') walletAddress: string) {
+    return this.userService.getNFTRented(walletAddress);
+  }
+
   @Patch(':walletAddress')
   @ApiParam({
     name: 'walletAddress',
@@ -58,8 +67,6 @@ export class UserController {
   @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
   @ApiOkResponse(USER_SWAGGER_RESPONSE.UPDATE_SUCCESS)
   update(@Param('walletAddress') walletAddress, @Body() body: UpdateUserDto) {
-    const { name } = body;
-    const data = { name };
-    return this.userService.update(walletAddress, data);
+    return this.userService.update(walletAddress, body);
   }
 }

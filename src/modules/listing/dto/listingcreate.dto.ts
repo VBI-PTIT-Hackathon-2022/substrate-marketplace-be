@@ -18,11 +18,11 @@ export class CreateListingDto {
   tokenId: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
-    example: 100000000000,
+    example: '100000000000',
   })
-  fee: number;
+  fee: string;
 
   @IsNotEmpty()
   @IsString()

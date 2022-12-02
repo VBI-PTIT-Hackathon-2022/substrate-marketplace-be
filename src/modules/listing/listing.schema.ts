@@ -29,7 +29,7 @@ export class Listing {
 
   @Prop()
   @ApiProperty()
-  fee: number;
+  fee: string;
 
   @Prop()
   @ApiProperty()

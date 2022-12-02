@@ -7,14 +7,21 @@ export class UpdateNftDto {
   @ApiProperty({
     example: 'Long',
   })
-  username: string;
+  tokenId: string;
 
   @IsOptional()
-  @IsDateString()
+  @IsString()
   @ApiProperty({
-    example: '2020-01-01',
+    example: '12313213',
   })
-  birthDay: string;
+  custodian: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    example: '12313213',
+  })
+  status: string;
 }
 
 export default UpdateNftDto;
