@@ -35,5 +35,13 @@ export class NftController {
   ) {
     return this.nftService.updateCustodian(tokenId, body);
   }
+
+  @Get('/owned/:walletAddress')
+  @ApiOperation({ summary: 'api get nft that user owns and rents ' })
+  @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
+  @ApiOkResponse(NFT_SWAGGER_RESPONSE.CREATE_SUCCESS)
+  getNFTOwned(@Param('walletAddress') walletAddress: string) {
+    return this.nftService.getNftOwned(walletAddress);
+  }
 }
 
