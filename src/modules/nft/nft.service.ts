@@ -102,8 +102,8 @@ export class NftService {
         },
       ],
     });
-    console.log("get owned nft ", nfts);
-    return nft;
+    console.log('get owned nft ', nfts);
+    return nfts;
   }
 
   async setUri(setUriNftDto: SetUriNftDto) {
