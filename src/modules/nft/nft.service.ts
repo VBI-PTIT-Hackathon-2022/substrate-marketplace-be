@@ -76,7 +76,7 @@ export class NftService {
     }
   }
 
-  async updateCustodian(tokenId, data: UpdateNftDto) {
+  async update(tokenId, data: UpdateNftDto) {
     try {
       await this.nftModel.findOneAndUpdate(tokenId, data);
       return {
@@ -118,7 +118,6 @@ export class NftService {
       );
     } catch (error) {}
   }
-
   hex_to_ascii(str1: string) {
     const hex = str1.toString();
     let str = '';

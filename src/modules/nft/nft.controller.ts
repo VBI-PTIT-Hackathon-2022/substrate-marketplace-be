@@ -26,14 +26,11 @@ export class NftController {
   }
 
   @Post(':tokenId')
-  @ApiOperation({ summary: 'api update custodian of nft ' })
+  @ApiOperation({ summary: 'api update data (custodian/status) of nft ' })
   @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
   @ApiOkResponse(NFT_SWAGGER_RESPONSE.CREATE_SUCCESS)
-  updateCustodian(
-    @Param('tokenId') tokenId: string,
-    @Body() body: NftUpdateDto,
-  ) {
-    return this.nftService.updateCustodian(tokenId, body);
+  update(@Param('tokenId') tokenId: string, @Body() body: NftUpdateDto) {
+    return this.nftService.update(tokenId, body);
   }
 
   @Get('/owned/:walletAddress')
@@ -44,4 +41,3 @@ export class NftController {
     return this.nftService.getNftOwned(walletAddress);
   }
 }
-

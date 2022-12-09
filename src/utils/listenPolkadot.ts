@@ -60,7 +60,7 @@ export async function listenPolkadot(
         };
         console.log(hashId);
         await orderService.createOrder(data);
-        await nftService.updateCustodian(rentalInfo.token, nft);
+        await nftService.update(rentalInfo.token, nft);
       }
     });
   });
