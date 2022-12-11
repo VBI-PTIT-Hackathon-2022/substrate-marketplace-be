@@ -71,7 +71,8 @@ export class UserService {
     const nftArray = [];
     for (let i = 0; i < account.length; i++) {
       const nft = await api.query.nftCurrency.tokenUri(account[i]);
-      const uri = this.nftService.hex_to_ascii(nft.toHex());
+      let uri = this.nftService.hex_to_ascii(nft.toHex());
+      uri = uri.substring(1);
       let nftInfor: CreateNftDto;
       if (uri.length > 2) {
         const { data } = await lastValueFrom(

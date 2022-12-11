@@ -78,7 +78,8 @@ export class NftService {
 
   async updateCustodian(tokenId, data: UpdateNftDto) {
     try {
-      await this.nftModel.findOneAndUpdate(tokenId, data);
+      await this.nftModel.findOneAndUpdate({tokenId:tokenId}, data);
+      console.log("update ", tokenId)
       return {
         success: true,
       };
@@ -102,7 +103,6 @@ export class NftService {
         },
       ],
     });
-    console.log('get owned nft ', nfts);
     return nfts;
   }
 
@@ -125,6 +125,7 @@ export class NftService {
     for (let n = 0; n < hex.length; n += 2) {
       str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
     }
+    console.log("check ",str)
     return str;
   }
 }
