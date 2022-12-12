@@ -40,4 +40,12 @@ export class NftController {
   getNFTOwned(@Param('walletAddress') walletAddress: string) {
     return this.nftService.getNftOwned(walletAddress);
   }
+
+  @Get('')
+  @ApiOperation({ summary: 'get all NFTs ' })
+  @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
+  @ApiOkResponse(NFT_SWAGGER_RESPONSE.CREATE_SUCCESS)
+  getAll() {
+    return this.nftService.getAllNft();
+  }
 }

@@ -91,6 +91,10 @@ export class NftService {
     return this.nftModel.findOne({ tokenId: tokenId });
   }
 
+  async getAllNft() {
+    return this.nftModel.find();
+  }
+
   async getNftOwned(walletAddress: string) {
     const nfts = this.nftModel.find({
       $or: [
