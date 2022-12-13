@@ -31,7 +31,7 @@ export class NftService {
   }
 
   async getNFTWithUser(id: string, query: QueryParamDto) {
-    const pageSize = +query.pageSize || 5;
+    const pageSize = +query.pageSize || 20;
     const pageIndex = +query.pageIndex || 1;
     let condition;
     if (query.tokenId) {

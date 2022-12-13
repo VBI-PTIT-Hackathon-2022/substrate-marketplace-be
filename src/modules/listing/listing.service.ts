@@ -30,7 +30,7 @@ export class ListingService {
   }
 
   getList(walletAddress: string, query: QueryParamDto) {
-    const pageSize = +query.pageSize || 5;
+    const pageSize = +query.pageSize || 20;
     const pageIndex = +query.pageIndex || 1;
     let condition;
     if (query.tokenId) {
@@ -68,7 +68,7 @@ export class ListingService {
   }
 
   getNft(query: QueryParamDto) {
-    const pageSize = +query.pageSize || 5;
+    const pageSize = +query.pageSize || 20;
     const pageIndex = +query.pageIndex || 1;
     let condition;
     if (query.tokenId) {
