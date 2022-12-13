@@ -78,7 +78,7 @@ export class NftService {
 
   async update(tokenId, data: UpdateNftDto) {
     try {
-      await this.nftModel.findOneAndUpdate(tokenId, data);
+      await this.nftModel.findOneAndUpdate({ tokenId: tokenId }, data);
       return {
         success: true,
       };

@@ -43,7 +43,10 @@ export async function listenPolkadot(
         const lender = enventData[0];
         const borrower = enventData[1];
         const hashId = enventData[2];
-        let rentalInfo: any = await api.query.renting.rentalInfo(hashId);
+        let rentalInfo: any = await api.query.renting.borrowers(
+          borrower,
+          hashId,
+        );
         rentalInfo = JSON.parse(rentalInfo.toString());
         const data = {
           lender: lender,
