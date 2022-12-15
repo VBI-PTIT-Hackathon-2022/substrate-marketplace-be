@@ -85,8 +85,8 @@ export async function listenPolkadot(
         };
         const listing = await listingService.getList(lender, query);
         const time = new Date(listing[0].due_date).getTime() / 1000;
-
-        if (time <= new Date.now() / 1000) {
+        const now = Date.now() / 1000;
+        if (time <= now) {
           const nft = {
             tokenId: token,
             custodian: lender,
