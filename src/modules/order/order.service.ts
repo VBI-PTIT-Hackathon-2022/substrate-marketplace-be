@@ -27,4 +27,20 @@ export class OrderService {
       throw new BadRequestException();
     }
   }
+
+  async deleteOrder(borrower: string, tokenId: string) {
+    try {
+      await this.orderModel.findOneAndDelete({
+        tokenId: tokenId,
+        borrower: borrower,
+      });
+      return {
+        data: {
+          success: true,
+        },
+      };
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
 }

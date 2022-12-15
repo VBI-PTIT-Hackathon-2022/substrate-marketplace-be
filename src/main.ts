@@ -8,11 +8,13 @@ import { HttpExceptionFilter } from './shared/fillter/http-exception.filter';
 import { NftService } from './modules/nft/nft.service';
 import { OrderService } from './modules/order/order.service';
 import { listenPolkadot } from './utils/listenPolkadot';
+import { ListingService } from './modules/listing/listing.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const nftService = app.get<NftService>(NftService);
   const orderService = app.get<OrderService>(OrderService);
+  const listingService = app.get<ListingService>(ListingService);
   const swaggerConfig = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('API with NestJS')
@@ -29,6 +31,6 @@ async function bootstrap() {
     credentials: true,
   });
   await app.listen(appConfig.port);
-  listenPolkadot(nftService, orderService).catch(console.error);
+  listenPolkadot(nftService, orderService, listingService).catch(console.error);
 }
 bootstrap();
