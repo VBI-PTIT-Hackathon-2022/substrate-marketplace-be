@@ -67,10 +67,10 @@ export class UserService {
     const api = await ApiPromise.create({
       provider: this.wsProvider,
     });
-    const account: any = await api.query.nftCurrency.listOwned(walletAddress);
+    const account: any = await api.query.collectible.listOwned(walletAddress);
     const nftArray = [];
     for (let i = 0; i < account.length; i++) {
-      const nft = await api.query.nftCurrency.tokenUri(account[i]);
+      const nft = await api.query.collectible.tokenUri(account[i]);
       const uri = this.nftService.hex_to_ascii(nft.toHex());
       let nftInfor: CreateNftDto;
       if (uri.length > 2) {

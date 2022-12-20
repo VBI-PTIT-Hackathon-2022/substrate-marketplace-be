@@ -16,7 +16,7 @@ export async function listenPolkadot(
   api.query.system.events((events) => {
     events.forEach(async (record) => {
       const { event } = record;
-      if (event.section === 'nftCurrency' && event.method === 'Mint') {
+      if (event.section === 'collectible' && event.method === 'Mint') {
         const enventData = [];
         event.data.forEach((data) => {
           enventData.push(data.toString());
@@ -28,7 +28,7 @@ export async function listenPolkadot(
           status: 'none',
         };
         await nftService.addNft(data);
-      } else if (event.section === 'nftCurrency' && event.method === 'SetUri') {
+      } else if (event.section === 'collectible' && event.method === 'SetUri') {
         const enventData = [];
         event.data.forEach((data) => {
           enventData.push(data.toString());
