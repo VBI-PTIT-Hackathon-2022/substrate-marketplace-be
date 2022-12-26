@@ -24,18 +24,18 @@ export class UpdateOfferDto {
   })
   isLender?: boolean;
   @IsOptional()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
     example: 100000000000,
   })
-  fee?: number;
+  fee?: string;
 
   @IsOptional()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
     example: 1766287472,
   })
-  due_date?: number;
+  due_date?: string;
 
   @IsOptional()
   @IsNumber()

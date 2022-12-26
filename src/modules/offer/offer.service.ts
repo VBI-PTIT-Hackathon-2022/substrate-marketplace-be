@@ -6,7 +6,7 @@ import { CreateOfferDto } from './dto/offer.create.dto';
 import UpdateOrderDto from './dto/offer.update.dto';
 
 @Injectable()
-export class OrderService {
+export class OfferService {
   constructor(
     @InjectModel(Offer.name) private orderModel: Model<OfferDocument>,
   ) {}
@@ -17,7 +17,7 @@ export class OrderService {
 
   async updateOffer(id: string, updateOfferDto: UpdateOrderDto) {
     try {
-      await this.orderModel.findByIdAndUpdate(id, updateOrderDto);
+      await this.orderModel.findByIdAndUpdate(id, updateOfferDto);
       return {
         data: {
           success: true,
@@ -28,17 +28,24 @@ export class OrderService {
     }
   }
 
-  async deleteOrder(borrower: string, tokenId: string) {
+  async deleteOffer(id: string) {
     try {
       await this.orderModel.findOneAndDelete({
-        tokenId: tokenId,
-        borrower: borrower,
+        id: id,
       });
       return {
         data: {
           success: true,
         },
       };
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
+
+  async getOffer(tokenId: string) {
+    try {
+      return await this.orderModel.find({ tokenId: tokenId });
     } catch (error) {
       throw new BadRequestException();
     }

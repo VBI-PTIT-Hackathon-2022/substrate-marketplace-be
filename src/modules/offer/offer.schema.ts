@@ -33,22 +33,23 @@ export class Offer {
 
   @Prop()
   @ApiProperty()
-  fee: number;
+  fee: string;
 
   @Prop()
   @ApiProperty()
-  due_date: number;
+  due_date: string;
 
   @Prop()
   @ApiProperty()
   paid_type: number;
-  @Prop()
-  @ApiProperty()
-  message: number;
 
   @Prop()
   @ApiProperty()
-  signature: number;
+  message: string;
+
+  @Prop()
+  @ApiProperty()
+  signature: string;
 }
 
 const OfferSchema = SchemaFactory.createForClass(Offer);

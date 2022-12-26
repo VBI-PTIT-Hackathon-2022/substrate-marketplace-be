@@ -30,18 +30,18 @@ export class CreateOfferDto {
   tokenId: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
     example: 100000000000,
   })
-  fee: number;
+  fee: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
     example: 1766287472,
   })
-  due_date: number;
+  due_date: string;
 
   @IsNotEmpty()
   @IsNumber()
@@ -51,10 +51,12 @@ export class CreateOfferDto {
   paid_type: number;
 
   @IsNotEmpty()
+  @IsString()
   @ApiProperty()
   message?: string;
 
   @IsNotEmpty()
+  @IsString()
   @ApiProperty()
   signature?: string;
 }
