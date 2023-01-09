@@ -33,15 +33,24 @@ export class ListingService {
     const pageSize = +query.pageSize || 20;
     const pageIndex = +query.pageIndex || 1;
     let condition;
-    if (query.tokenId) {
-      condition = {
-        tokenId: query.tokenId,
-      };
+    if (!query.tokenId) {
+    } else {
+      if (query.isTrading == 'false') {
+        condition = {
+          tokenId: query.tokenId,
+          isTrading: false,
+        };
+      } else {
+        condition = {
+          tokenId: query.tokenId,
+          isTrading: true,
+        };
+      }
     }
     return this.listingModel.aggregate([
       {
         $match: {
-          lender: walletAddress,
+          maker: walletAddress,
           ...condition,
         },
       },

@@ -88,6 +88,7 @@ export async function listenPolkadot(
           tokenId: token,
           pageIndex: 1,
           pageSize: 20,
+          isTrading: 'false',
         };
         const listing = await listingService.getList(lender, query);
         const time = new Date(listing[0].due_date).getTime() / 1000;

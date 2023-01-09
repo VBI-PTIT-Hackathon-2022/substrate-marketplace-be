@@ -12,8 +12,8 @@ import { Order_SWAGGER_RESPONSE } from './orderTrading.constant';
 import { OrderTradingService } from './orderTrading.service';
 
 @ApiBearerAuth()
-@Controller('orders')
-@ApiTags('Order')
+@Controller('tradingOrders')
+@ApiTags('TradingOrder')
 export class OrderTradingController {
   constructor(private orderService: OrderTradingService) {}
 

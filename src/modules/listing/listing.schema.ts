@@ -18,7 +18,7 @@ export class Listing {
     ref: 'users',
   })
   @ApiProperty()
-  lender: string;
+  maker: string;
 
   @Prop({
     type: String,
@@ -46,6 +46,10 @@ export class Listing {
   @Prop()
   @ApiProperty()
   signature: string;
+
+  @Prop()
+  @ApiProperty()
+  isTrading: boolean;
 }
 
 const ListingSchema = SchemaFactory.createForClass(Listing);

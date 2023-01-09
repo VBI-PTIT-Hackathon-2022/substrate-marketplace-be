@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsBoolean } from "class-validator";
 
 export class QueryParamDto {
   @ApiPropertyOptional()
@@ -14,4 +14,8 @@ export class QueryParamDto {
   @IsString()
   @IsOptional()
   tokenId: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  isTrading: string;
 }
