@@ -21,6 +21,12 @@ export class CreateOfferDto {
     example: 'true',
   })
   isLender: false;
+  @IsNotEmpty()
+  @IsBoolean()
+  @ApiProperty({
+    example: true,
+  })
+  isTrading: boolean;
 
   @IsNotEmpty()
   @IsString()
@@ -69,6 +75,10 @@ export class AddOfferDto {
   @IsOptional()
   @IsBoolean()
   isLender?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isTrading?: boolean;
 
   @IsOptional()
   @IsString()

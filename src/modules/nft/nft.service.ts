@@ -87,6 +87,20 @@ export class NftService {
     }
   }
 
+  async updateStatus(tokenId, status) {
+    try {
+      await this.nftModel.findOneAndUpdate(
+        { tokenId: tokenId },
+        { status: status },
+      );
+      return {
+        success: true,
+      };
+    } catch (error) {
+      throw new BadRequestException('bad request exception');
+    }
+  }
+
   async getNft(tokenId: string) {
     return this.nftModel.findOne({ tokenId: tokenId });
   }

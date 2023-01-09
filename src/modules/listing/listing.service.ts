@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Listing, ListingDocument } from './listing.schema';
-import CreateListingDto from './dto/listingcreate.dto';
+import CreateListingDto from './dto/listing.create.dto';
 import UpdateListingDto from './dto/listring.update.dto';
 import { QueryParamDto } from '../entity/query-param.dto';
 
@@ -54,7 +54,24 @@ export class ListingService {
     ]);
   }
 
-  async cancel(tokenId: string) {
+  getListing(message: string) {
+    return this.listingModel.find([{ message: message }]);
+  }
+
+  async cancel(message: string) {
+    try {
+      await this.listingModel.deleteOne({ message: message });
+    } catch (error) {
+      throw new BadRequestException();
+    }
+    return {
+      data: {
+        Delete: true,
+      },
+    };
+  }
+
+  async cancelListing(tokenId: string) {
     try {
       await this.listingModel.deleteOne({ tokenId: tokenId });
     } catch (error) {

@@ -3,13 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { Document, ObjectId } from 'mongoose';
 
-export type OfferDocument = Offer & Document;
+export type OrderDocument = Order & Document;
 
 @Schema({
   timestamps: true,
   _id: true,
 })
-export class Offer {
+export class Order {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
@@ -18,15 +18,14 @@ export class Offer {
     ref: 'users',
   })
   @ApiProperty()
-  maker: string;
+  seller: string;
 
-  @Prop()
+  @Prop({
+    type: String,
+    ref: 'users',
+  })
   @ApiProperty()
-  isLender: boolean;
-
-  @Prop()
-  @ApiProperty()
-  isTrading: boolean;
+  buyer: string;
 
   @Prop({
     type: String,
@@ -37,25 +36,9 @@ export class Offer {
 
   @Prop()
   @ApiProperty()
-  fee: string;
-
-  @Prop()
-  @ApiProperty()
-  due_date: string;
-
-  @Prop()
-  @ApiProperty()
-  paid_type: number;
-
-  @Prop()
-  @ApiProperty()
-  message: string;
-
-  @Prop()
-  @ApiProperty()
-  signature: string;
+  price: number;
 }
 
-const OfferSchema = SchemaFactory.createForClass(Offer);
+const OrderTradingSchema = SchemaFactory.createForClass(Order);
 
-export { OfferSchema };
+export { OrderTradingSchema };

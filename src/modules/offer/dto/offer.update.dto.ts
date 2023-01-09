@@ -24,6 +24,12 @@ export class UpdateOfferDto {
   })
   isLender?: boolean;
   @IsOptional()
+  @IsBoolean()
+  @ApiProperty({
+    example: 'false',
+  })
+  isTrading?: boolean;
+  @IsOptional()
   @IsString()
   @ApiProperty({
     example: 100000000000,

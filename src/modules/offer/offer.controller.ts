@@ -36,6 +36,7 @@ export class OfferController {
     const {
       maker,
       isLender,
+      isTrading,
       tokenId,
       fee,
       due_date,
@@ -46,6 +47,7 @@ export class OfferController {
     const data = {
       maker,
       isLender,
+      isTrading,
       tokenId,
       fee,
       due_date,
@@ -63,6 +65,7 @@ export class OfferController {
     const {
       maker,
       isLender,
+      isTrading,
       tokenId,
       fee,
       due_date,
@@ -73,6 +76,7 @@ export class OfferController {
     const data = {
       maker,
       isLender,
+      isTrading,
       tokenId,
       fee,
       due_date,

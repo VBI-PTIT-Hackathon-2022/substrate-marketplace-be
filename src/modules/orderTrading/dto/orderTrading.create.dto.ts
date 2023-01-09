@@ -7,14 +7,13 @@ export class CreateOrderDto {
   @ApiProperty({
     example: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
   })
-  lender: string;
-
+  seller: string;
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
     example: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
   })
-  borrower: string;
+  buyer: string;
 
   @IsNotEmpty()
   @IsString()
@@ -29,42 +28,7 @@ export class CreateOrderDto {
   @ApiProperty({
     example: 100000000000,
   })
-  fee: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  @ApiProperty({
-    example: 1766287472,
-  })
-  due_date: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  @ApiProperty({
-    example: 1,
-  })
-  paid_type: number;
-
-  @IsOptional()
-  @ApiProperty()
-  message?: string;
-
-  @IsOptional()
-  @ApiProperty()
-  signature?: string;
+  price: number;
 }
 
-export class AddOrderDto {
-  @IsOptional()
-  @IsString()
-  lender?: string;
-
-  @IsOptional()
-  @IsString()
-  borrower?: string;
-
-  @IsOptional()
-  @IsString()
-  hashId?: string;
-}
 export default CreateOrderDto;

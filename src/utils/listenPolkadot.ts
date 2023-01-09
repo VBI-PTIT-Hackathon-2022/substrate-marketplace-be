@@ -3,11 +3,15 @@ import { NftService } from 'src/modules/nft/nft.service';
 import { OrderService } from 'src/modules/order/order.service';
 import { ListingService } from '../modules/listing/listing.service';
 import { QueryParamDto } from '../modules/entity/query-param.dto';
+import { OfferService } from '../modules/offer/offer.service';
+import { OrderTradingService } from '../modules/orderTrading/orderTrading.service';
 
 export async function listenPolkadot(
   nftService: NftService,
   orderService: OrderService,
   listingService: ListingService,
+  offerService: OfferService,
+  orderTradingService: OrderTradingService,
 ) {
   const wsProvider = new WsProvider('ws://127.0.0.1:9944');
   const api = await ApiPromise.create({
@@ -67,6 +71,8 @@ export async function listenPolkadot(
         console.log(hashId);
         await orderService.createOrder(data);
         await nftService.update(rentalInfo.token, nft);
+        await listingService.cancelListing(rentalInfo.token);
+        await offerService.delete(rentalInfo.token, borrower);
       } else if (
         event.section === 'renting' &&
         event.method === 'ReturnAsset'
@@ -92,7 +98,6 @@ export async function listenPolkadot(
             custodian: lender,
             status: 'forRent',
           };
-          await orderService.deleteOrder(borrower, token);
           await nftService.update(token, nft);
         } else {
           const nft = {
@@ -100,9 +105,52 @@ export async function listenPolkadot(
             custodian: lender,
             status: 'none',
           };
-          await orderService.deleteOrder(borrower, token);
           await nftService.update(token, nft);
         }
+      } else if (
+        event.section === 'renting' &&
+        event.method === 'CancelOrder'
+      ) {
+        const enventData = [];
+        event.data.forEach((data) => {
+          enventData.push(data.toString());
+        });
+        const message = event[0];
+        const is_lender = event[2];
+        if (is_lender) {
+          const listing = await listingService.getListing(message);
+          if (listing.length != 0) {
+            await nftService.updateStatus(listing[0].tokenId, 'none');
+            await listingService.cancel(message);
+          }
+        } else {
+          await offerService.deleteOffer(message);
+        }
+      } else if (event.section === 'trading' && event.method === 'MatchOrder') {
+        const eventData = [];
+        event.data.forEach((data) => {
+          eventData.push(data.toString());
+        });
+        const seller = eventData[0];
+        const buyer = eventData[1];
+        const tokenId = eventData[2];
+        const price = eventData[3];
+        const data = {
+          seller: seller,
+          buyer: buyer,
+          price: price,
+          tokenId: tokenId,
+        };
+        const nft = {
+          tokenId: tokenId,
+          walletAddress: buyer,
+          custodian: buyer,
+          status: 'none',
+        };
+        await orderTradingService.createOrder(data);
+        await nftService.update(tokenId, nft);
+        await listingService.cancelListing(tokenId);
+        await offerService.delete(tokenId, buyer);
       }
     });
   });

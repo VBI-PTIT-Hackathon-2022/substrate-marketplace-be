@@ -28,10 +28,26 @@ export class OfferService {
     }
   }
 
-  async deleteOffer(id: string) {
+  async deleteOffer(message: string) {
     try {
       await this.orderModel.findOneAndDelete({
-        id: id,
+        message: message,
+      });
+      return {
+        data: {
+          success: true,
+        },
+      };
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
+
+  async delete(tokenId: string, maker: string) {
+    try {
+      await this.orderModel.deleteOne({
+        tokenId: tokenId,
+        maker: maker,
       });
       return {
         data: {

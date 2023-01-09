@@ -18,7 +18,7 @@ import {
 import { QueryParamDto } from '../entity/query-param.dto';
 //import { NftService } from '../nft/nft.service';
 import { USER_SWAGGER_RESPONSE } from '../user/user.constant';
-import CreateListingDto from './dto/listingcreate.dto';
+import CreateListingDto from './dto/listing.create.dto';
 import UpdateListingDto from './dto/listring.update.dto';
 import { LISTING_SWAGGER_RESPONSE } from './listing.constant';
 import { ListingService } from './listing.service';
@@ -36,16 +36,25 @@ export class ListingController {
   @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
   @ApiOkResponse(LISTING_SWAGGER_RESPONSE.CREATE_SUCCESS)
   createListing(@Body() createListing: CreateListingDto) {
-    const { lender, fee, tokenId, due_date, paid_type, message, signature } =
-      createListing;
-    const data = {
-      lender,
+    const {
+      maker,
       fee,
       tokenId,
       due_date,
       paid_type,
       message,
       signature,
+      isTrading,
+    } = createListing;
+    const data = {
+      maker,
+      fee,
+      tokenId,
+      due_date,
+      paid_type,
+      message,
+      signature,
+      isTrading,
     };
     return this.listingService.createListing(data);
   }
@@ -58,16 +67,25 @@ export class ListingController {
     @Param('id') id: string,
     @Body() updateListingDto: UpdateListingDto,
   ) {
-    const { lender, fee, tokenId, due_date, paid_type, message, signature } =
-      updateListingDto;
-    const data = {
-      lender,
+    const {
+      maker,
       fee,
       tokenId,
       due_date,
       paid_type,
       message,
       signature,
+      isTrading,
+    } = updateListingDto;
+    const data = {
+      maker,
+      fee,
+      tokenId,
+      due_date,
+      paid_type,
+      message,
+      signature,
+      isTrading,
     };
     return this.listingService.updateListing(id, data);
   }

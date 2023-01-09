@@ -9,12 +9,16 @@ import { NftService } from './modules/nft/nft.service';
 import { OrderService } from './modules/order/order.service';
 import { listenPolkadot } from './utils/listenPolkadot';
 import { ListingService } from './modules/listing/listing.service';
+import { OfferService } from './modules/offer/offer.service';
+import { OrderTradingService } from './modules/orderTrading/orderTrading.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const nftService = app.get<NftService>(NftService);
   const orderService = app.get<OrderService>(OrderService);
   const listingService = app.get<ListingService>(ListingService);
+  const offerService = app.get<OfferService>(OfferService);
+  const orderTradingService = app.get<OrderTradingService>(OrderTradingService);
   const swaggerConfig = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('API with NestJS')
@@ -31,6 +35,12 @@ async function bootstrap() {
     credentials: true,
   });
   await app.listen(appConfig.port);
-  listenPolkadot(nftService, orderService, listingService).catch(console.error);
+  listenPolkadot(
+    nftService,
+    orderService,
+    listingService,
+    offerService,
+    orderTradingService,
+  ).catch(console.error);
 }
 bootstrap();

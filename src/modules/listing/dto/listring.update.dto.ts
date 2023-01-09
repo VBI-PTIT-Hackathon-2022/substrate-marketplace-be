@@ -7,7 +7,7 @@ export class UpdateListingDto {
   @ApiProperty({
     example: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
   })
-  lender?: string;
+  maker?: string;
 
   @IsOptional()
   @IsString()
@@ -45,6 +45,9 @@ export class UpdateListingDto {
   @IsOptional()
   @ApiProperty()
   signature?: string;
+  @IsOptional()
+  @ApiProperty()
+  isTrading?: boolean;
 }
 
 export default UpdateListingDto;
