@@ -113,7 +113,15 @@ export class ListingController {
   @ApiOperation({ summary: 'xóa nft khỏi listing' })
   @ApiBadRequestResponse(USER_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
   @ApiOkResponse(LISTING_SWAGGER_RESPONSE.DELETE_SUCCESS)
-  cancelListing(@Param('tokenId') tokenId: string) {
-    return this.listingService.cancel(tokenId);
+  cancelListing(
+    @Param('tokenId') tokenId: string,
+    @Query() query: QueryParamDto,
+  ) {
+    if (query.isTrading == 'true') {
+      return this.listingService.cancelListing(tokenId, true);
+    } else {
+      return this.listingService.cancelListing(tokenId, false);
+    }
+
   }
 }

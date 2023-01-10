@@ -80,9 +80,12 @@ export class ListingService {
     };
   }
 
-  async cancelListing(tokenId: string) {
+  async cancelListing(tokenId: string, isTrading: boolean) {
     try {
-      await this.listingModel.deleteOne({ tokenId: tokenId });
+      await this.listingModel.deleteMany({
+        tokenId: tokenId,
+        isTrading: isTrading,
+      });
     } catch (error) {
       throw new BadRequestException();
     }

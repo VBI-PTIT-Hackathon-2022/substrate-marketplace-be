@@ -24,14 +24,14 @@ export class CreateListingDto {
   })
   fee: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiProperty({
     example: '2022-12-12',
   })
   due_date: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @ApiProperty({
     example: 1,

@@ -3,13 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { Document, ObjectId } from 'mongoose';
 
-export type OrderDocument = Order & Document;
+export type OrderDocument = OrderTrading & Document;
 
 @Schema({
   timestamps: true,
   _id: true,
 })
-export class Order {
+export class OrderTrading {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
@@ -39,6 +39,6 @@ export class Order {
   price: number;
 }
 
-const OrderTradingSchema = SchemaFactory.createForClass(Order);
+const OrderTradingSchema = SchemaFactory.createForClass(OrderTrading);
 
 export { OrderTradingSchema };

@@ -71,7 +71,7 @@ export async function listenPolkadot(
         console.log(hashId);
         await orderService.createOrder(data);
         await nftService.update(rentalInfo.token, nft);
-        await listingService.cancelListing(rentalInfo.token);
+        await listingService.cancelListing(rentalInfo.token, false);
         await offerService.delete(rentalInfo.token, borrower);
       } else if (
         event.section === 'renting' &&
@@ -150,8 +150,28 @@ export async function listenPolkadot(
         };
         await orderTradingService.createOrder(data);
         await nftService.update(tokenId, nft);
-        await listingService.cancelListing(tokenId);
+        await listingService.cancelListing(tokenId, true);
+        await listingService.cancelListing(tokenId, false);
         await offerService.delete(tokenId, buyer);
+      } else if (
+        event.section === 'trading' &&
+        event.method === 'CancelOrder'
+      ) {
+        const enventData = [];
+        event.data.forEach((data) => {
+          enventData.push(data.toString());
+        });
+        const message = event[0];
+        const is_seller = event[2];
+        if (is_seller) {
+          const listing = await listingService.getListing(message);
+          if (listing.length != 0) {
+            await nftService.updateStatus(listing[0].tokenId, 'none');
+            await listingService.cancel(message);
+          }
+        } else {
+          await offerService.deleteOffer(message);
+        }
       }
     });
   });
